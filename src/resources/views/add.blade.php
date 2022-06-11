@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>index</title>
-</head>
-<body>
-  クイズの選択
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+  クイズ写真のアップロード
+  <form action="{{ route('store', ['id' => $id]) }}" method="POST" enctype="multipart/form-data">
+@csrf
+<input type="file" name="img_path">
+<input type="submit" value="アップロード">
+</form>
+@endsection

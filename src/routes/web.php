@@ -20,3 +20,6 @@ Route::get('/admin', 'HomeController@admin')->name('admin');
 Route::get('/admin/add', 'HomeController@big_add')->name('big_add');
 Route::get('/admin/add/{id}', 'HomeController@add')->name('add');
 Route::get('/admin/delete/{id}', 'HomeController@delete')->name('delete');
+// Route::get('/upload', 'HomeController@upload')->name('upload');
+Route::post('/store/{id}','HomeController@store')->name('store');
+Route::post('/store','HomeController@big_store')->name('gig_store');
