@@ -5,6 +5,6 @@
   <form action="{{ route('store', ['id' => $id]) }}" method="POST" enctype="multipart/form-data">
 @csrf
 <input type="file" name="img_path">
-<input type="submit" value="アップロード">
+<input type="submit" value="追加">
 </form>
 @endsection

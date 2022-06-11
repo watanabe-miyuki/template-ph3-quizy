@@ -27,8 +27,12 @@ class HomeController extends Controller
 
     public function admin()
     {
-        $questions=Question::get();
-        return view('admin', compact('questions'));
+        $big_questions=Big_question::get();
+        foreach($big_questions as $b_q){
+        $b_q['questions'] = Big_question::find($b_q['id'])->questions;
+        }
+        // dd($big_questions);
+        return view('admin', compact('big_questions'));
     }
     public function big_add()
     {
