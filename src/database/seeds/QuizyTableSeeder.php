@@ -23,15 +23,15 @@ class QuizyTableSeeder extends Seeder
 
         DB::table('questions')->insert([
             'big_question_id' => 1,
-            'image' => 'takanawa.png',
+            'image' => 'img/takanawa.png',
         ]);
         DB::table('questions')->insert([
             'big_question_id' => 1,
-            'image' => 'kameido.png',
+            'image' => 'img/kameido.png',
         ]);
         DB::table('questions')->insert([
             'big_question_id' => 2,
-            'image' => 'mukainada.png',
+            'image' => 'img/mukainada.png',
         ]);
 
         DB::table('choices')->insert([

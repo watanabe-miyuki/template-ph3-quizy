@@ -26,6 +26,6 @@ class CreateBigQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('big_que');
+        Schema::dropIfExists('big_questions');
     }
 }
