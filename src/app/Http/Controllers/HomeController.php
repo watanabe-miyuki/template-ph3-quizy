@@ -19,9 +19,14 @@ class HomeController extends Controller
         $questions = Big_question::find($id)->questions;
         foreach ($questions as $q) {
             $q['choices'] = Question::find($q['id'])->choices;
+        foreach($q['choices'] as $c){
+            if($c['valid']===1){
+            $q['answer'] = $c;
+            }
         }
+    }
 
-        // dd($questions);
+        // dd($questions->toArray());
         return view('quiz', compact('questions'));
     }
 
