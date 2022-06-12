@@ -103,3 +103,4 @@ document.getElementById(`question-list${number}`).addEventListener('click', e =>
 // document.getElementById(`question-list${number}`).appendChild(itemShuffle2);
 // };
 }
+}
