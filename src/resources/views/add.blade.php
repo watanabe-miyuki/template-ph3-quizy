@@ -2,7 +2,7 @@
 
 @section('content')
 クイズの追加
-<form action="{{ route('store', ['id' => $id]) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('store', ['id' =>  $id]) }}" method="POST" enctype="multipart/form-data">
   @csrf
   <input type="file" name="img_path">
 

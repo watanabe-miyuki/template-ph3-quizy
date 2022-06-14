@@ -23,4 +23,5 @@ Route::get('/admin/edit/{id}', 'HomeController@edit')->name('edit');
 Route::get('/admin/delete/{id}', 'HomeController@delete')->name('delete');
 // Route::get('/upload', 'HomeController@upload')->name('upload');
 Route::post('/store/{id}','HomeController@store')->name('store');
+Route::post('/update/{id}','HomeController@update')->name('update');
 Route::post('/store','HomeController@big_store')->name('big_store');

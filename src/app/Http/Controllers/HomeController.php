@@ -80,7 +80,47 @@ class HomeController extends Controller
     }
         return redirect()->route('admin');
     }
+    public function update(Request $request, $id)
+    {
+        Choice::where('question_id', $id)->delete();
+        $data = $request->all();
+        // dd($data);
+        foreach($data['choices'] as $k => $choice){
+        if($k == $data['valid']){
+        $valid = 1;
+        }else{
+        $valid = 0;
+        }
+        // dd($valid);
+
+        Choice::insertGetId([
+            'question_id' => $id,
+            'name' => $choice,
+            'valid' => $valid
+        ]);
+    }
+        return redirect()->route('admin');
+    }
     public function delete(){
         return view('delete');
+    }
+
+    public function edit($id){
+        // 該当するIDのメモをデータベースから取得
+        $question = Question::where('id', $id)->first();
+        // //   ↑firstは一行だけとる
+        //   dd($question);
+        // //取得したメモをViewに渡す
+        // $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
+        // $tags = Tag::where('user_id', $user['id'])->get();
+        // return view('edit',compact('memo', 'user', 'memos', 'tags'));
+        $choices = Question::find($id)->choices;
+        // foreach($q['choices'] as $c){
+        //     if($c['valid']===1){
+        //     $q['answer'] = $c;
+        //     
+        // }
+                //   dd($choices);
+        return view('edit', compact('question', 'choices'));
     }
 }
