@@ -2,16 +2,21 @@
 
 @section('content')
 <main>
-  <section class="question">
+  <section class="question" id="js-getCount" data-count="{{ $count }}">
     @foreach($questions as $k => $q)
     <div class="question-inner">
       <h2 class="question-title">
-        <span class="under">{{$q['id']}}. この地名はな</span>んて読む？
+        <span class="under">{{$k + 1}}. この地名はな</span>んて読む？
       </h2>
       <img src="{{ Storage::url($q->image) }}" width="650px">
-      <ul id="question-list{{$q['id']}}">
+      <ul id="question-list{{$k}}">
         @foreach($q['choices'] as $q_c)
-        <li class="question-list-item-nonCorrect" value="{{$q_c['valid']}}">
+        <li 
+        @if($q_c['valid']==1)
+        class="question-list-item-correct{{$k}}"
+        @else 
+        class="question-list-item-nonCorrect"
+        @endif>
           {{$q_c['name']}}
         </li>
         @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Big_question;
+use App\Choice;
 use App\Question;
 
 class HomeController extends Controller
@@ -17,17 +18,18 @@ class HomeController extends Controller
     public function quiz($id)
     {
         $questions = Big_question::find($id)->questions;
+        $count = count($questions);
         foreach ($questions as $q) {
             $q['choices'] = Question::find($q['id'])->choices;
-        foreach($q['choices'] as $c){
-            if($c['valid']===1){
-            $q['answer'] = $c;
+            foreach($q['choices'] as $c){
+                if($c['valid']===1){
+                $q['answer'] = $c;
+                }
             }
-        }
     }
 
         // dd($questions->toArray());
-        return view('quiz', compact('questions'));
+        return view('quiz', compact('questions', 'count'));
     }
 
     public function admin()
@@ -50,15 +52,32 @@ class HomeController extends Controller
     // add=create
     public function store(Request $request, $id)
     {
+        $data = $request->all();
+        // dd($data);
         // 画像フォームでリクエストした画像情報を取得
         $img = $request->file('img_path');
         // storage > public > img配下に画像が保存される
         $path = $img->store('img', 'public');
         // DBに登録する処理
-        Question::insertGetId([
+        $question_id = Question::insertGetId([
             'big_question_id' => $id,
-            'image' => $path,
+            'image' => $path
         ]);
+
+        foreach($data['choices'] as $k => $choice){
+        if($k == $data['valid']){
+        $valid = 1;
+        }else{
+        $valid = 0;
+        }
+        // dd($valid);
+
+        Choice::insertGetId([
+            'question_id' => $question_id,
+            'name' => $choice,
+            'valid' => $valid
+        ]);
+    }
         return redirect()->route('admin');
     }
     public function delete(){

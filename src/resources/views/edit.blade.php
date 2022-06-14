@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-クイズの追加
+クイズの編集
 <form action="{{ route('store', ['id' => $id]) }}" method="POST" enctype="multipart/form-data">
   @csrf
   <input type="file" name="img_path">

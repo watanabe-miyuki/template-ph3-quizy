@@ -2,6 +2,10 @@
   display: block;
 }
 
+.d-flex{
+  display: flex;
+}
+
 .question{
   /* text-align: center; */
   margin: 0 auto;
