@@ -101,8 +101,10 @@ class HomeController extends Controller
     }
         return redirect()->route('admin');
     }
-    public function delete(){
-        return view('delete');
+    public function delete($id){
+        Question::where('id', $id)->delete();
+        Choice::where('question_id', $id)->delete();
+        return redirect()->route('admin');
     }
 
     public function edit($id){
