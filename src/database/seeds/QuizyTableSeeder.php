@@ -22,14 +22,17 @@ class QuizyTableSeeder extends Seeder
         ]);
 
         DB::table('questions')->insert([
+            'order' => 1,
             'big_question_id' => 1,
             'image' => 'img/takanawa.png',
         ]);
         DB::table('questions')->insert([
+            'order' => 2,
             'big_question_id' => 1,
             'image' => 'img/kameido.png',
         ]);
         DB::table('questions')->insert([
+            'order' => 1,
             'big_question_id' => 2,
             'image' => 'img/mukainada.png',
         ]);

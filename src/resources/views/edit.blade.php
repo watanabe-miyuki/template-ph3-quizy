@@ -7,6 +7,9 @@
 </div>
 <form action="{{ route('update', ['id' => $question['id']]) }}" method="POST" enctype="multipart/form-data">
   @csrf
+  <div class="form-group">
+  問題番号<input class="form-control" name="order" type="number" value="{{$question['order']}}"> 番
+  </div>
   <!-- choices -->
   <div class="form-group">
     <label for="subject">

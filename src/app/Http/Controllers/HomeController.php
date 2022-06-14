@@ -37,6 +37,8 @@ class HomeController extends Controller
         $big_questions=Big_question::get();
         foreach($big_questions as $b_q){
         $b_q['questions'] = Big_question::find($b_q['id'])->questions;
+        // $b_q['questions'] = Big_question::find($b_q['id'])->questions->orderBy('order', 'ASC');
+
         }
         // dd($big_questions);
         return view('admin', compact('big_questions'));
@@ -52,6 +54,10 @@ class HomeController extends Controller
     // add=create
     public function store(Request $request, $id)
     {
+        // question_id= $idの数＋1がorder
+        $questions = Big_question::find($id)->questions;
+        $order = count($questions)+1;
+
         $data = $request->all();
         // dd($data);
         // 画像フォームでリクエストした画像情報を取得
@@ -61,6 +67,7 @@ class HomeController extends Controller
         // DBに登録する処理
         $question_id = Question::insertGetId([
             'big_question_id' => $id,
+            'order' => $order,
             'image' => $path
         ]);
 
@@ -82,8 +89,9 @@ class HomeController extends Controller
     }
     public function update(Request $request, $id)
     {
-        Choice::where('question_id', $id)->delete();
         $data = $request->all();
+        Choice::where('question_id', $id)->delete();
+        Question::where('id', $id)->update(['order' => (int)$data['order']]);
         // dd($data);
         foreach($data['choices'] as $k => $choice){
         if($k == $data['valid']){
