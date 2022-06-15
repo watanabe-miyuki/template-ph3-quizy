@@ -26,5 +26,7 @@ RUN apt-get update && \
   composer config -g repos.packagist composer https://packagist.org
 
 COPY ./usr/local/etc/php/php.ini /usr/local/etc/php/php.ini
+COPY --from=node:12.20 /usr/local/bin /usr/local/bin
+COPY --from=node:12.20 /usr/local/lib /usr/local/lib
 
 WORKDIR /work/backend

@@ -7,9 +7,28 @@ use App\Big_question;
 use App\Choice;
 use App\Question;
 
+
 class HomeController extends Controller
 {
-    //
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    // public function index()
+    // {
+    //     return view('home');
+    // }
     public function index()
     {
         $big_questions = Big_question::all();
@@ -132,5 +151,5 @@ class HomeController extends Controller
         // }
                 //   dd($choices);
         return view('edit', compact('question', 'choices'));
-    }
+}
 }

@@ -14,8 +14,9 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
+        // if (! $request->expectsJson()) {
+        //     return route('login');
+        // }
+        return route('admin.login.index'); // 管理画面トップのルート名を記述することで、管理画面ログインフォームにリダイレクト
     }
 }
