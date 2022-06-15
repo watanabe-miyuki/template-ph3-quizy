@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Big_question;
+use App\Choice;
+use App\Question;
 
 class LoginController extends Controller
 {
@@ -19,11 +22,9 @@ class LoginController extends Controller
 
         if (Auth::guard('administrators')->attempt($credentials)) {
             // ログインしたら管理画面トップにリダイレクト
-            // return redirect()->route('admin.index')->with([
-            //     'login_msg' => 'ログインしました。',
-            // ]);
-            // slack
-            return view('admin.index');
+            return redirect()->route('admin.index')->with([
+                'login_msg' => 'ログインしました。',
+            ]);
         }
 
         return back()->withErrors([

@@ -12,19 +12,4 @@ class Question extends Model
     {
     return $this->hasMany('App\Choice');
 }
-
-// protected $guarded = ['id'];
-
-// public static $rules = [
-//     'big_question_id' => 'required',
-//     'image' => 'image|file',
-// ];
-// use UseFactory;
-
-// protected $table = 'questions';
-
-// protected $fillable = [
-//     'big_question_id',
-//     'image',
-// ];
 }

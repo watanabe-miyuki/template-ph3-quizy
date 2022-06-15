@@ -51,10 +51,6 @@ return [
             'driver' => 'session',
             'provider' => 'administrators',
         ],
-        'members' => [
-            'driver' => 'session',
-            'provider' => 'members',
-        ],
         // 追加ここまで
     ],
 

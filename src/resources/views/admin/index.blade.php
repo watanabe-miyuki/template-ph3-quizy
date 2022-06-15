@@ -1,31 +1,25 @@
-<html>
-<head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-  <div class="container">
-    <h1>管理画面トップ</h1>
+@extends('../layouts.admin')
 
-    @if (session('login_msg'))
-    <div class="alert alert-success">
-      {{ session('login_msg') }}
+@section('content')
+<!-- <a href="/add" class="d-block m-3">大門追加</a> -->
+
+@foreach ($big_questions as $b_q)
+<div class="m-5">
+<h3>・{{$b_q['name']}}　　　　
+<a href="/admin/add/{{$b_q['id']}}">設問追加</a>
+<!-- <a href="/admin/delete/{{$b_q['id']}}">大門削除</a> -->
+</h3>
+<div class="d-flex">
+    @foreach ($b_q['questions'] as $q)
+    <div class="m-2">
+        <img src="{{ Storage::url($q->image) }}" width="200px">
+        <div>
+            <a href="/admin/edit/{{$q['id']}}">編集</a>
+            <a href="/admin/delete/{{$q['id']}}">削除</a>
+        </div>
     </div>
-    @endif
-
-    @if (Auth::guard('administrators')->check())
-    <div>ユーザーID {{ Auth::guard('administrators')->user()->userid }}でログイン中</div>
-    @endif
-
-    <ul>
-      <li>ログイン状態: {{ Auth::check() }}</li>
-      <li>管理者（Administrator）ログイン状態: {{ Auth::guard('administrators')->check() }}</li>
-      <li>会員（members） ログイン状態: {{ Auth::guard('members')->check() }}</li>
-    </ul>
-
-    <div>
-      <a href="/admin/logout">ログアウト</a>
-    </div>
-  </div>
-
-</body>
-</html>
+    @endforeach
+</div>
+</div>
+@endforeach
+@endsection

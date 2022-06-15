@@ -39,7 +39,7 @@ class HomeController extends Controller
         $questions = Big_question::find($id)->questions;
         $count = count($questions);
         foreach ($questions as $q) {
-            $q['choices'] = Question::find($q['id'])->choices;
+            $q->choices = Question::find($q->id)->choices;
             foreach($q['choices'] as $c){
                 if($c['valid']===1){
                 $q['answer'] = $c;

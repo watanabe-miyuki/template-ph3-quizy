@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +12,27 @@
 
 
 </head>
+
 <body>
-@yield('content')
+  <div class="container">
+    <h1>管理画面</h1>
+
+    @if (session('login_msg'))
+    <div class="alert alert-success">
+      {{ session('login_msg') }}
+    </div>
+    @endif
+    <div class="d-flex">
+      @if (Auth::guard('administrators')->check())
+      <div>ユーザーID {{ Auth::guard('administrators')->user()->userid }}でログイン中</div>
+      @endif
+      <div class="ml-auto">
+        <a href="/admin/logout">ログアウト</a>
+      </div>
+    </div>
+  
+  @yield('content')
+</div>
 </body>
+
 </html>
