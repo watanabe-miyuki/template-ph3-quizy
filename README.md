@@ -1,4 +1,4 @@
-# laravel インストール方法
+# laravel webappだよインストール方法
 
 1. `cd docker`
 2. `docker compose build --no-cache` (ビルドする)
