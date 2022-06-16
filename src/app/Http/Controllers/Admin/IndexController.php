@@ -11,11 +11,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-            $big_questions=Big_question::get();
-            foreach($big_questions as $b_q){
-            $b_q['questions'] = Big_question::find($b_q['id'])->questions;
-            }
-            // dd($big_questions);
+            $big_questions=Big_question::orderBy('order', 'asc')->get();
             return view('admin.index', compact('big_questions'));
     }
 }

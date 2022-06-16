@@ -15,9 +15,11 @@ class QuizyTableSeeder extends Seeder
     {
         //
         DB::table('big_questions')->insert([
+            'order' => 1,
             'name' => '東京の難読地名クイズ',
         ]);
         DB::table('big_questions')->insert([
+            'order' => 2,
             'name' => '広島の難読地名クイズ',
         ]);
 

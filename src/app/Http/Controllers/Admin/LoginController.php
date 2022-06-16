@@ -22,7 +22,7 @@ class LoginController extends Controller
 
         if (Auth::guard('administrators')->attempt($credentials)) {
             // ログインしたら管理画面トップにリダイレクト
-            return redirect()->route('admin.index')->with([
+            return redirect()->route('admin')->with([
                 'login_msg' => 'ログインしました。',
             ]);
         }

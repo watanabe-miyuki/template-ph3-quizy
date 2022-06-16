@@ -27,7 +27,7 @@
       <div>ユーザーID {{ Auth::guard('administrators')->user()->userid }}でログイン中</div>
       @endif
       <div class="ml-auto">
-        <a href="/admin/logout">ログアウト</a>
+        <a href="{{ route('admin.login.logout') }}">ログアウト</a>
       </div>
     </div>
   

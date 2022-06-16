@@ -12,4 +12,13 @@ class Question extends Model
     {
     return $this->hasMany('App\Choice');
 }
+
+public static function boot()
+{
+    parent::boot();
+
+    static::deleting(function ($question) {
+        $question->choices()->delete();
+    });
+}
 }
