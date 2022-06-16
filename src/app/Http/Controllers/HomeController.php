@@ -151,19 +151,19 @@ class HomeController extends Controller
         return redirect()->route('admin');
     }
 
-    public function delete($id)
-    {
-        Question::where('id', $id)->delete();
-        Choice::where('question_id', $id)->delete();
-        return redirect()->route('admin');
-    }
+    // public function delete($id)
+    // {
+    //     Question::where('id', $id)->delete();
+    //     Choice::where('question_id', $id)->delete();
+    //     return redirect()->route('admin');
+    // }
 
-    public function edit($id)
-    {
-        $question = Question::where('id', $id)->first();
-        $choices = Question::find($id)->choices;
-        return view('edit', compact('question', 'choices'));
-    }
+    // public function edit($id)
+    // {
+    //     $question = Question::where('id', $id)->first();
+    //     $choices = Question::find($id)->choices;
+    //     return view('edit', compact('question', 'choices'));
+    // }
 
     public function big_edit()
     {
