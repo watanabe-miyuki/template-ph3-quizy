@@ -37,7 +37,7 @@
 </form>
 @endforeach
 <h3 class="ml-5 mt-5">新規追加</h3>
-<form action="{{ route('store', ['id' =>  $id]) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('q_store', ['id' =>  $id]) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="ml-5 mt-2 d-flex">
         <div class="d-flex"><input class="form-control" name="order" type="number" style="width:60px;">番　</div>

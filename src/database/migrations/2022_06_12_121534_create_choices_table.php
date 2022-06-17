@@ -15,9 +15,13 @@ class CreateChoicesTable extends Migration
     {
         Schema::create('choices', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('question_id');
+            $table->integer('question_id')->unsigned();
             $table->string('name');
             $table->integer('valid');
+            $table->foreign('question_id')
+            ->references('id')
+            ->on('questions')
+            ->onDelete('cascade');
         });
     }
 

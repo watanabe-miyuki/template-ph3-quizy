@@ -12,13 +12,26 @@ class Question extends Model
     {
     return $this->hasMany('App\Choice');
 }
+    // public function big_questions()
+    // {
+    //     return $this->belongsTo('App\Big_question');
+    // }
+// public static function boot()
+// {
+//     parent::boot();
+//     static::deleted(function ($question) {
+//         $question->choices()->delete();
+//     });
+// }
+// }
+// protected static function boot() 
+// {
+//     parent::boot();
+//     static::deleting(function($model) {
+//         foreach ($model->choices()->get() as $choice) {
+//             $choice->delete();
+//         }
+//     });
+// }
 
-public static function boot()
-{
-    parent::boot();
-
-    static::deleting(function ($question) {
-        $question->choices()->delete();
-    });
-}
 }

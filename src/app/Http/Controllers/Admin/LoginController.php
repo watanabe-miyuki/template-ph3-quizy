@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Big_question;
 use App\Choice;
 use App\Question;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
+    // // お試し
+    // use AuthenticatesUsers;
+    // protected $maxAttempts = 1;
+    // protected $decayMinutes = 1;
+
+
     public function index()
     {
         return view('admin.login.index');
