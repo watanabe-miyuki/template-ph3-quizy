@@ -86,10 +86,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Administrator::class,
         ],
-        'members' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Member::class,
-        ],
         // 追加ここまで
     ],
 

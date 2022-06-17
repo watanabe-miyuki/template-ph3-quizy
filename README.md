@@ -1,3 +1,8 @@
+# 管理者ログイン方法
+ユーザーid userid
+パスワード password
+
+
 # laravel インストール方法
 
 1. `cd docker`
