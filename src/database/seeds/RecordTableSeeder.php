@@ -38,7 +38,7 @@ class RecordTableSeeder extends Seeder
                 'CSS' => rand(0, 1),
                 'JavaScript' => rand(0, 1),
                 'PHP' => rand(0, 1),
-                'SQL' => rand(0, 1),
+                'ＳＱＬ' => rand(0, 1),
                 'Laravel' => rand(0, 1),
                 'SHELL' => rand(0, 1),
                 'other' => rand(0, 1),

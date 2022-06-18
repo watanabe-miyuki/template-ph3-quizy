@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Record;
 use Illuminate\Http\Request;
-use App\Big_question;
-use App\Choice;
-use App\Question;
-
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,141 +13,80 @@ class HomeController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    // public function index()
-    // {
-    //     return view('home');
-    // }
     public function index()
     {
-        $big_questions = Big_question::all();
-        return view('index', compact('big_questions'));
-    }
-    public function quiz($id)
-    {
-        $questions = Big_question::find($id)->questions;
-        $count = count($questions);
-        foreach ($questions as $q) {
-            $q->choices = Question::find($q->id)->choices;
-            foreach($q['choices'] as $c){
-                if($c['valid']===1){
-                $q['answer'] = $c;
+        $user = Auth::user();
+
+        // PieChart_data START
+        $records = Record::where('user_id', $user['id'])->whereBetween("date", ['2022-6-1', '2022-6-30'])->selectRaw('
+        N*time/(N + dotInstall + POSSE) AS N, 
+        dotInstall*time/(N + dotInstall + POSSE) AS dotInstall, 
+        POSSE*time/(N + dotInstall + POSSE) AS POSSE, 
+        HTML*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS HTML,
+        CSS*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS CSS,
+        JavaScript*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS JavaScript,
+        PHP*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS PHP,
+        ＳＱＬ*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS ＳＱＬ,
+        Laravel*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS Laravel,
+        SHELL*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS SHELL,
+        other*time/(HTML + CSS + JavaScript + PHP + ＳＱＬ + Laravel + SHELL + other) AS other')->get()->toArray();
+
+        // 参考https://teratail.com/questions/45703
+        function arraySum(array $arr)
+        {
+            $res = [];
+            if (is_array($arr)) {
+                foreach ($arr as $val) {
+                    foreach ($val as $k => $v) {
+                        if (isset($res[$k])) {
+                            $res[$k] += $v;
+                        } else {
+                            $res[$k] = $v;
+                        }
+                    }
                 }
             }
-    }
-
-        // dd($questions->toArray());
-        return view('quiz', compact('questions', 'count'));
-    }
-
-    public function admin()
-    {
-        $big_questions=Big_question::get();
-        foreach($big_questions as $b_q){
-        $b_q['questions'] = Big_question::find($b_q['id'])->questions;
-        // $b_q['questions'] = Big_question::find($b_q['id'])->questions->orderBy('order', 'ASC');
-
+            return $res;
         }
-        // dd($big_questions);
-        return view('admin', compact('big_questions'));
-    }
-    public function big_add()
-    {
-        return view('big_add');
-    }
-    public function add($id)
-    {
-        return view('add',  compact('id'));
-    }
-    // add=create
-    public function store(Request $request, $id)
-    {
-        // question_id= $idの数＋1がorder
-        $questions = Big_question::find($id)->questions;
-        $order = count($questions)+1;
+        $PieChart_data = arraySum($records);
+        // PieChart_data END
 
-        $data = $request->all();
-        // dd($data);
-        // 画像フォームでリクエストした画像情報を取得
-        $img = $request->file('img_path');
-        // storage > public > img配下に画像が保存される
-        $path = $img->store('img', 'public');
-        // DBに登録する処理
-        $question_id = Question::insertGetId([
-            'big_question_id' => $id,
-            'order' => $order,
-            'image' => $path
-        ]);
+        // BarChart_data START
+        $BarChart_data = Record::where('user_id', $user['id'])
+            ->whereBetween("date", ['2022-6-1', '2022-6-30'])
+            ->select('date')
+            ->selectRaw('SUM(time) AS total_time')
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get()->toArray();
+        // dd($BarChart_data);
+        // BarChart_data END
 
-        foreach($data['choices'] as $k => $choice){
-        if($k == $data['valid']){
-        $valid = 1;
-        }else{
-        $valid = 0;
-        }
-        // dd($valid);
+        // Month START
+        $Month = Record::where('user_id', $user['id'])
+            ->whereBetween("date", ['2022-6-1', '2022-6-30'])
+            ->selectRaw('SUM(time) AS total_time')
+            ->first();
+        // dd($Month['total_time']);
+        // Month END
 
-        Choice::insertGetId([
-            'question_id' => $question_id,
-            'name' => $choice,
-            'valid' => $valid
-        ]);
-    }
-        return redirect()->route('admin');
-    }
-    public function update(Request $request, $id)
-    {
-        $data = $request->all();
-        Choice::where('question_id', $id)->delete();
-        Question::where('id', $id)->update(['order' => (int)$data['order']]);
-        // dd($data);
-        foreach($data['choices'] as $k => $choice){
-        if($k == $data['valid']){
-        $valid = 1;
-        }else{
-        $valid = 0;
-        }
-        // dd($valid);
+        // Total START
+        $Total = Record::where('user_id', $user['id'])
+            ->selectRaw('SUM(time) AS total_time')
+            ->first();
+        dd($Total['total_time']);
+        // Total END
 
-        Choice::insertGetId([
-            'question_id' => $id,
-            'name' => $choice,
-            'valid' => $valid
-        ]);
+        return view('home', compact('PieChart_data', 'BarChart_data', 'Month', 'Total'));
     }
-        return redirect()->route('admin');
-    }
-    public function delete($id){
-        Question::where('id', $id)->delete();
-        Choice::where('question_id', $id)->delete();
-        return redirect()->route('admin');
-    }
-
-    public function edit($id){
-        // 該当するIDのメモをデータベースから取得
-        $question = Question::where('id', $id)->first();
-        // //   ↑firstは一行だけとる
-        //   dd($question);
-        // //取得したメモをViewに渡す
-        // $memos = Memo::where('user_id', $user['id'])->where('status', 1)->orderBy('updated_at', 'DESC')->get();
-        // $tags = Tag::where('user_id', $user['id'])->get();
-        // return view('edit',compact('memo', 'user', 'memos', 'tags'));
-        $choices = Question::find($id)->choices;
-        // foreach($q['choices'] as $c){
-        //     if($c['valid']===1){
-        //     $q['answer'] = $c;
-        //     
-        // }
-                //   dd($choices);
-        return view('edit', compact('question', 'choices'));
-}
 }

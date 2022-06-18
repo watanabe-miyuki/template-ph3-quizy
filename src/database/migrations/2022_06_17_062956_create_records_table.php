@@ -24,7 +24,7 @@ class CreateRecordsTable extends Migration
             $table->integer('CSS');
             $table->integer('JavaScript');
             $table->integer('PHP');
-            $table->integer('SQL');
+            $table->integer('ＳＱＬ');
             $table->integer('Laravel');
             $table->integer('SHELL');
             $table->integer('other');
