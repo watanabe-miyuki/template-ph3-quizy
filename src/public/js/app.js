@@ -49938,3 +49938,73 @@ module.exports = __webpack_require__(/*! /work/backend/resources/sass/app.scss *
 /***/ })
 
 /******/ });
+
+// ここから
+// ローディング表示
+const modal = document.querySelector(".modal-container");
+const modalClose = document.querySelector(".js-close");
+function showModal() {
+  modal.style.display = "block";
+}
+
+modalClose.addEventListener("click", closeModal);
+function closeModal() {
+  modal.style.display = "none";
+  location.reload();
+}
+
+// ここから
+const link_share = document.getElementById("link_share");
+link_share.addEventListener("click", function (event) {
+  const shareButton = document.getElementById("share");
+  if (shareButton.checked) {
+    const twitterMessage = document.getElementById("twitterMessage");
+    link_share.href = `https://twitter.com/intent/tweet?&text=${twitterMessage.value}`;
+  } else {
+    event.preventDefault();
+  }
+  formRapper.innerHTML = "";
+  document.querySelector(".js-record").style.display = "none";
+  const loading_back = document.createElement("div");
+  loading_back.id = "loading_back";
+  formRapper.appendChild(loading_back);
+  const loading_front = document.createElement("div");
+  loading_front.id = "loading_front";
+  loading_back.appendChild(loading_front);
+  setTimeout(done, 2500);
+});
+
+{/* <div id="formRapper">
+  <div id="loading_back">
+    <div id="loading_front"></div>
+  </div>
+</div>; */}
+
+function done() {
+  formRapper.innerHTML = "";
+  const completeMessage = document.createElement("div");
+  completeMessage.id = "completeMessage";
+  const awesome = document.createElement("p");
+  awesome.id = "awesome";
+  awesome.innerHTML = "AWESOME!";
+  completeMessage.appendChild(awesome);
+  const mark = document.createElement("div");
+  mark.id = "mark";
+  completeMessage.appendChild(mark);
+  const message = document.createElement("div");
+  message.id = "message_done";
+  message.innerHTML = "記録、投稿<br>完了しました";
+  completeMessage.appendChild(message);
+  formRapper.appendChild(completeMessage);
+}
+// チェックボックスクリック時の色
+const checkbox = document.querySelectorAll(".checkbox");
+const checkbox_label = document.querySelectorAll("label");
+
+function checkboxClick(index) {
+    checkbox[index].classList.toggle("checkbox_chosen");
+}
+
+checkbox_label.forEach((element, index) =>
+  element.setAttribute("onclick", `checkboxClick(${index})`)
+);

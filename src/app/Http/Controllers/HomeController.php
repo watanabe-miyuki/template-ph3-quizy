@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Record;
+use Facade\FlareClient\Time\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,6 +60,7 @@ class HomeController extends Controller
             return $res;
         }
         $PieChart_data = arraySum($records);
+        // dd($PieChart_data['HTML']);
         // PieChart_data END
 
         // BarChart_data START
@@ -72,6 +74,14 @@ class HomeController extends Controller
         // dd($BarChart_data);
         // BarChart_data END
 
+        // Today START
+        $Today = Record::where('user_id', $user['id'])
+            ->where("date", '2022-6-30')
+            ->select('time')
+            ->get();
+        // dd($Today[0]['time']);
+        // Today END
+
         // Month START
         $Month = Record::where('user_id', $user['id'])
             ->whereBetween("date", ['2022-6-1', '2022-6-30'])
@@ -84,9 +94,9 @@ class HomeController extends Controller
         $Total = Record::where('user_id', $user['id'])
             ->selectRaw('SUM(time) AS total_time')
             ->first();
-        dd($Total['total_time']);
+        // dd($Total['total_time']);
         // Total END
 
-        return view('home', compact('PieChart_data', 'BarChart_data', 'Month', 'Total'));
+        return view('home', compact('PieChart_data', 'BarChart_data', 'Today' ,'Month', 'Total'));
     }
 }

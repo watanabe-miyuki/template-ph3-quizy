@@ -88,7 +88,7 @@
 
 <!-- ここからtop -->
 <header>
-    <div><img src="./img/POSSElogo.jpg" alt="" /></div>
+    <div><img  src="{{ Storage::url('img/POSSElogo.jpg') }}" alt="" /></div>
     <div class="now_week">4th week</div>
     <button onclick="showModal()" class="js-open button-design button-pc">
         記録・投稿
@@ -102,21 +102,25 @@
                     <div>
                         <p class="timer_title">Today</p>
                         <p class="timer_number">
-                            <?= $Today ?>
+                            @if ($Today->first() != NULL ) )
+                            {{ $Today[0]['time'] }}
+                            @else
+                            0
+                            @endif
                         </p>
                         <p class="timer_hour">hour</p>
                     </div>
                     <div>
                         <p class="timer_title">Month</p>
                         <p class="timer_number">
-                            <?= $Month ?>
+                            {{$Month['total_time'] }}
                         </p>
                         <p class="timer_hour">hour</p>
                     </div>
                     <div>
                         <p class="timer_title">Total</p>
                         <p class="timer_number">
-                            <?= $Total ?>
+                            {{ $Total['total_time'] }}
                         </p>
                         <p class="timer_hour">hour</p>
                     </div>
@@ -178,6 +182,13 @@
     </div>
 </main>
 <script type="text/javascript">
+// $(function() {
+//   var data = @json($data);　// ここ
+//   $('#test').text(data);
+// });
+
+// console.log('読み込めてる？');
+
     //----------------------ドーナツ作成-----------------------------------
 // api load
 google.load("visualization", "1.0", { packages: ["corechart"] });
@@ -214,14 +225,14 @@ function drawChart() {
   // -----------------学習言語---------------
   var study_language_data = new google.visualization.arrayToDataTable([
     ["", ""],
-    ["HTML", <?= $PieChart_data['HTML']?>],
-    ["CSS", <?= $PieChart_data['CSS']?>],
+    ["HTML", {{ $PieChart_data['HTML']}}],
+    ["CSS", {{ $PieChart_data['CSS']}}],
     // ["JavaScript",],
-    ["PHP", <?= $PieChart_data['PHP']?>],
-    ["Laravel", <?= $PieChart_data['Laravel']?>],
+    ["PHP", {{ $PieChart_data['PHP']}}],
+    ["Laravel", {{ $PieChart_data['Laravel']}}],
     // ["SQL", ],
-    ["SHELL", <?= $PieChart_data['SHELL']?>],
-    ["その他", <?= $PieChart_data['other']?>],
+    ["SHELL", {{ $PieChart_data['SHELL']}}],
+    ["その他", {{ $PieChart_data['other']}}],
   ]);
 
   var study_language_chart = new google.visualization.PieChart(
@@ -233,9 +244,9 @@ function drawChart() {
   // ------学習コンテンツ--------
   var study_contents_data = new google.visualization.arrayToDataTable([
     ["", ""],
-    ["N予備校", <?= $PieChart_data['N']?>],
-    ["ドットインストール", <?= $PieChart_data['dotInstall']?>],
-    ["POSSE課題", <?= $PieChart_data['POSSE']?>],
+    ["N予備校", {{ $PieChart_data['N']}}],
+    ["ドットインストール", {{ $PieChart_data['dotInstall']}}],
+    ["POSSE課題", {{ $PieChart_data['POSSE']}}],
   ]);
 
   var study_contents_chart = new google.visualization.PieChart(
@@ -247,32 +258,6 @@ function drawChart() {
 
 // 棒グラフ
 
-google.charts.load("current", { packages: ["corechart"] });
-google.charts.setOnLoadCallback(drawChart1);
-function drawChart1() {
-  var data = new google.visualization.DataTable();
-  data.addColumn("string", "day");
-  data.addColumn("number", "hour");
-  data.addRows([
-  <?php foreach($BarChart_data as $key => $bd):?>
-    
-    ["<?php if($key%2 == 1){ echo ($key+1) ;}?>", <?=$bd['time']?>],
-  <?php endforeach; ?>
-  ]);
-  var options = {
-    chartArea: { width: "70%", height: "70%" },
-    legend: { position: "none" },
-    color: ["#20bdde"],
-    vAxis: {
-      format: "#h",
-      ticks: [0, 2, 4, 6, 8],
-    },
-  };
-  var chart = new google.visualization.ColumnChart(
-    document.getElementById("chart_div")
-  );
-  chart.draw(data, options);
-}
 
 </script>
 @endsection
