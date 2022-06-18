@@ -181,13 +181,9 @@
         </div>
     </div>
 </main>
-<script type="text/javascript">
-// $(function() {
-//   var data = @json($data);　// ここ
-//   $('#test').text(data);
-// });
-
-// console.log('読み込めてる？');
+<div is="script" type="text/javascript">
+  {{-- var PieChart_data = @json($PieChart_data); --}}
+  {{-- console.log(PieChart_data); --}}
 
     //----------------------ドーナツ作成-----------------------------------
 // api load
@@ -227,10 +223,10 @@ function drawChart() {
     ["", ""],
     ["HTML", {{ $PieChart_data['HTML']}}],
     ["CSS", {{ $PieChart_data['CSS']}}],
-    // ["JavaScript",],
+    ["JavaScript", {{ $PieChart_data['JavaScript']}}],
     ["PHP", {{ $PieChart_data['PHP']}}],
     ["Laravel", {{ $PieChart_data['Laravel']}}],
-    // ["SQL", ],
+    ["SQL", {{ $PieChart_data['ＳＱＬ']}}],
     ["SHELL", {{ $PieChart_data['SHELL']}}],
     ["その他", {{ $PieChart_data['other']}}],
   ]);
@@ -257,7 +253,37 @@ function drawChart() {
 }
 
 // 棒グラフ
+google.charts.load("current", { packages: ["corechart"] });
+google.charts.setOnLoadCallback(drawChart1);
+function drawChart1() {
+  var data = new google.visualization.DataTable();
+  data.addColumn("string", "day");
+  data.addColumn("number", "hour");
+  data.addRows([
+    @for ($i = 1; $i <= 30; $i++)
+    ["@if($i%2 == 1){{ $i }}@endif", 
+    @if (isset($BarChart_data[$i]))
+    {{ $BarChart_data[$i] }}
+    @else
+    0
+    @endif],
+    @endfor
+  ]);
+  var options = {
+    chartArea: { width: "70%", height: "70%" },
+    legend: { position: "none" },
+    color: ["#20bdde"],
+    vAxis: {
+      format: "#h",
+      ticks: [0, 2, 4, 6, 8],
+    },
+  };
+  var chart = new google.visualization.ColumnChart(
+    document.getElementById("chart_div")
+  );
+  chart.draw(data, options);
+}
 
 
-</script>
+</div>
 @endsection

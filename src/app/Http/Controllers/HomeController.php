@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Record;
+use Carbon\Carbon;
 use Facade\FlareClient\Time\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,13 +65,17 @@ class HomeController extends Controller
         // PieChart_data END
 
         // BarChart_data START
-        $BarChart_data = Record::where('user_id', $user['id'])
+        $data = Record::where('user_id', $user['id'])
             ->whereBetween("date", ['2022-6-1', '2022-6-30'])
             ->select('date')
             ->selectRaw('SUM(time) AS total_time')
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get()->toArray();
+            foreach ($data as $k => $r) {
+                $day = Carbon::createFromFormat('Y-m-d', $r['date'])->format('d');
+                $BarChart_data[(int)$day] = $r["total_time"];
+            }
         // dd($BarChart_data);
         // BarChart_data END
 

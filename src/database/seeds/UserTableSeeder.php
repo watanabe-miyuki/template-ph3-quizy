@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
         //
         DB::table('users')->truncate();
         DB::table('users')->insert([
-            'name' => '2022-5-11',
+            'name' => 'test_user',
             'email' => 'test@mail.com',
             'password' => Hash::make('password'),
         ]);

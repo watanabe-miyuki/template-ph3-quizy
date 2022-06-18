@@ -11,6 +11,8 @@
   <title>{{ config('app.name', 'SimpleNote') }}</title>
 
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js" defer></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
   <script src="{{ '/js/app.js' }}" defer></script>
   @yield('js')
 
@@ -22,7 +24,6 @@
 
   <!-- Styles -->
   <link href="{{ '/css/app.css' }}" rel="stylesheet">
-  <link href="{{ '/css/utility.css' }}" rel="stylesheet">
   @yield('css')
 </head>
 
