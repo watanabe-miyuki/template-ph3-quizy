@@ -9,6 +9,7 @@
     @csrf
 
     <div class="m-5 d-flex">
+        <input type="hidden" value="{{ $id }}" name="big_id">
         <div class="d-flex"><input class="form-control" name="order" type="number" value="{{$q['order']}}"
                 style="width:60px;">番　</div>
         <div class="m-2 d-flex">
@@ -39,6 +40,7 @@
 <h3 class="ml-5 mt-5">新規追加</h3>
 <form action="{{ route('q_store', ['id' =>  $id]) }}" method="POST" enctype="multipart/form-data">
     @csrf
+    <input type="hidden" value="{{ $id }}" name="big_id">
     <div class="ml-5 mt-2 d-flex">
         <div class="d-flex"><input class="form-control" name="order" type="number" style="width:60px;">番　</div>
         <div class="m-2 d-flex">

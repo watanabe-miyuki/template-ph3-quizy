@@ -97,10 +97,10 @@ class HomeController extends Controller
 
     public function q_update(Request $request, $id)
     {
+        $data = $request->all();
         if ($request->has('delete')) {
             Question::where('id', $id)->delete();
         } else {
-            $data = $request->all();
             Choice::where('question_id', $id)->delete();
             Question::where('id', $id)->update(['order' => (int)$data['order']]);
             foreach ($data['choices'] as $k => $choice) {
@@ -118,7 +118,7 @@ class HomeController extends Controller
             }
         }
 
-        return redirect()->route('q_edit', ['id' => $id]);
+        return redirect()->route('q_edit', ['id' => $data['big_id']]);
     }
 
         public function q_store(Request $request, $id)
