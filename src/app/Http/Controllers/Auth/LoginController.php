@@ -21,8 +21,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $maxAttempts = 4;     // ログイン試行回数（回）
-    protected $decayMinutes = 10;   // ログインロックタイム（分）
+    protected $maxAttempts = 5;     // ログイン試行回数（回）
+    protected $decayMinutes = 3;   // ログインロックタイム（分）
 
     /**
      * Where to redirect users after login.
@@ -48,6 +48,6 @@ class LoginController extends Controller
 
     public function redirectPath()
     {
-        return redirect()->route('admin');;
+        return '/admin';
     }
 }

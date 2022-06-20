@@ -11,13 +11,6 @@
 |
 */
 
-
-// Route::prefix('/admin')->group(function () {
-//     Route::get('/login', 'Admin\LoginController@index')->name('admin.login.index');
-//     Route::post('/login', 'Admin\LoginController@login')->name('admin.login.login');
-//     Route::get('/logout', 'Admin\LoginController@logout')->name('admin.login.logout');
-// });
-// 管理者（administratorsテーブル）未認証の場合にログインフォームに強制リダイレクトさせるミドルウェアを設定する。 
 Auth::routes(); 
 Route::group(['middleware' => 'auth', 'prefix'=>'/admin'], function () {
     Route::get('/', 'HomeController@admin')->name('admin');
