@@ -20,17 +20,9 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
-        /**
-     * ログイン試行回数（回）
-     * @var int
-     */
-    protected $maxAttempts = 1;
-    
-    /**
-     * ログインロックタイム（分）
-     */
-    protected $decayMinutes = 2;
 
+    protected $maxAttempts = 4;     // ログイン試行回数（回）
+    protected $decayMinutes = 10;   // ログインロックタイム（分）
 
     /**
      * Where to redirect users after login.
@@ -47,5 +39,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function username()
+    {
+        return 'name';
+    }
+
+    public function redirectPath()
+    {
+        return redirect()->route('admin');;
     }
 }

@@ -25,10 +25,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    // public function index()
-    // {
-    //     return view('home');
-    // }
+    public function admin()
+    {
+        $big_questions=Big_question::orderBy('order', 'asc')->get();
+        return view('admin.index', compact('big_questions'));
+    }
+
+    public function home()
+    {
+        return view('welcome');
+    }
     public function index()
     {
         $big_questions = Big_question::orderBy('order', 'asc')->get();

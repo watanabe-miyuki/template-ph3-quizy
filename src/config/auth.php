@@ -46,12 +46,6 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
-        // 追加ここから
-        'administrators' => [
-            'driver' => 'session',
-            'provider' => 'administrators',
-        ],
-        // 追加ここまで
     ],
 
     /*
@@ -81,12 +75,6 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-        // 追加ここから
-        'administrators' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Administrator::class,
-        ],
-        // 追加ここまで
     ],
 
     /*
