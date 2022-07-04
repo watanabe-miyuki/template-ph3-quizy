@@ -1,5 +1,5 @@
 # 管理者ログイン方法
-ユーザーid userid
+ユーザーid test_user
 パスワード password
 
 
