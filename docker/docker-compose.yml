@@ -28,3 +28,7 @@ services:
     volumes:
       - ../src:/work/backend
     depends_on: ["app"]
+  container_mailhog:
+    image: mailhog/mailhog
+    ports:
+      - 8025:8025
