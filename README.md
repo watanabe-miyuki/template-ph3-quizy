@@ -1,7 +1,13 @@
-# 管理者ログイン方法
-ユーザーid test_user
-パスワード password
+## 今週の課題
+すべて完了
 
+## 注意点やレビュワーに伝えたいこと(あれば)
+コントローラーで、配列でデータを整えてしまっています
+配列がなれていて、laravelらしい書き方ができていないと思います
+
+adminログイン方法
+user_id: test_user
+password: password
 
 # laravel インストール方法
 
